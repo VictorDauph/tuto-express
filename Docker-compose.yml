@@ -1,0 +1,25 @@
+services:
+  api:
+    build: .
+    container_name: express-api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/app
+      - /app/node_modules # Empêche le partage des node_modules entre hôte et conteneur
+    environment:
+      - NODE_ENV=development
+    command: npm run start
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+
+volumes:
+  mongodb-data:
