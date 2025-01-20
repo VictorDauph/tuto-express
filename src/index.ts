@@ -3,10 +3,16 @@ import testRoutes from './routes/testRoutes'
 import userRoutes from './routes/userRoutes'
 import mongoose from 'mongoose';
 import swaggerDocs from './config/swagger';
+import dotenv from 'dotenv';
+import authRoutes from './routes/authRoutes';
 
 const app = express();
 const swaggerUi = require('swagger-ui-express');
-const PORT = 3000;
+
+//chargement des variables d'environnement
+dotenv.config();
+
+const PORT = process.env.PORT;
 console.log("test")
 
 app.use(express.json());
@@ -14,7 +20,7 @@ app.use(express.json());
 // Connecter MongoDB
 const connectDB = async () => {
     try {
-        await mongoose.connect('mongodb://mongodb:27017/my_database');
+        await mongoose.connect(process.env.MONGO_URI as string);
         console.log('MongoDB connecté avec succès');
     } catch (err) {
         console.error('Erreur lors de la connexion à MongoDB:', err);
@@ -27,6 +33,9 @@ connectDB();
 //Routes
 app.use('/test', testRoutes)
 app.use('/users', userRoutes)
+
+// Routes d'authentification
+app.use('/auth', authRoutes);
 
 // Swagger route
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));

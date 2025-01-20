@@ -1,5 +1,6 @@
 import express from 'express';
-import { test, test2 } from '../controllers/testController';
+import { protectedTest, test, test2 } from '../controllers/testController';
+import { verifyTokenMiddleware } from '../middlewares/verifyTokenMiddleware';
 
 
 
@@ -57,5 +58,8 @@ router.get('/', test);
  *         description: Requête invalide (par exemple, données manquantes ou incorrectes)
  */
 router.post('/', test2);
+
+
+router.get('/protected', verifyTokenMiddleware, protectedTest)
 
 export default router;

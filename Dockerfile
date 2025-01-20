@@ -7,7 +7,7 @@ WORKDIR /app
 # Étape 3 : Copier les fichiers package.json et package-lock.json
 COPY package*.json ./
 
-# Étape 4 : Installer les dépendances
+#Étape 4 : Installer les dépendances
 RUN npm install
 
 # Étape 5 : Installer nodemon globalement (pour surveiller les modifications)

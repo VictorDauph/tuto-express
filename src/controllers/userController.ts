@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User, { IUser } from "../models/User";
+import { hashPassword } from "../utils/pwdUtils";
 
 export function getAllUsers(req: Request, res: Response) {
     res.send([])
@@ -7,15 +8,18 @@ export function getAllUsers(req: Request, res: Response) {
 
 export async function createUser(req: Request, res: Response) {
     try {
-        const { name, email, age } = req.body;
+        const { name, email, age, password } = req.body;
 
         // Validation des champs
-        if (!name || !email || !age) {
-            res.status(400).json({ message: 'Tous les champs sont requis : name, email, age' });
+        if (!name || !email || !age || !password) {
+            res.status(400).json({ message: 'Tous les champs sont requis : name, email, age, password' });
         }
 
+        //hashage du password
+        const hashedPassword = await hashPassword(password);
+
         // Création du nouvel utilisateur
-        const newUser: IUser = new User({ name, email, age });
+        const newUser: IUser = new User({ name, email, age, hashedPassword });
 
         // Sauvegarde dans la base de données
         const savedUser = await newUser.save();

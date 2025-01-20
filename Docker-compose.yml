@@ -1,13 +1,15 @@
 services:
   api:
     build: .
-    container_name: express-api
+    container_name: tuto_express
     ports:
       - "3000:3000"
+    env_file:
+      - .env
     depends_on:
       - mongodb
     volumes:
-      - .:/app
+      - ./src:/app/src
       - /app/node_modules # Empêche le partage des node_modules entre hôte et conteneur
     environment:
       - NODE_ENV=development
@@ -15,7 +17,7 @@ services:
 
   mongodb:
     image: mongo:latest
-    container_name: mongodb
+    container_name: mongodb_tuto_express
     ports:
       - "27017:27017"
     volumes:
