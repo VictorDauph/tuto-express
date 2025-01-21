@@ -4,6 +4,7 @@ services:
     container_name: tuto_express
     ports:
       - "3000:3000"
+      - "9229:9229"
     env_file:
       - .env
     depends_on:
@@ -13,7 +14,7 @@ services:
       - /app/node_modules # Empêche le partage des node_modules entre hôte et conteneur
     environment:
       - NODE_ENV=development
-    command: npm run start
+    command: npm run debug
 
   mongodb:
     image: mongo:latest

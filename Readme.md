@@ -9,3 +9,13 @@ docker system prune -a
 
 Pour accéder à swagger-UI via un navigateur:
 http://localhost:3000/api-docs/
+
+
+#Le projet est configuré pour fonctionner avec le debugger de vs-code
+#lancer le projet:
+npm run dockerStart 
+
+#lancer le debugger:
+Debug Docker
+
+le projet doit être lancé pour que le debugger fonctionne.
