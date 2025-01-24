@@ -16,6 +16,6 @@ RUN npm install -g nodemon
 # Étape 6 : Copier tout le code source dans le conteneur
 COPY . .
 
-
+CMD ["npm", "start"]
 
 
