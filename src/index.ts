@@ -1,13 +1,15 @@
 import express from 'express';
-import testRoutes from './routes/testRoutes'
-import userRoutes from './routes/userRoutes'
-import mongoose from 'mongoose';
-import swaggerDocs from './config/swagger';
+
 import dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express'
+import testRoutes from './routes/testRoutes';
+import swaggerDocs from './config/swagger';
+import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
+import mongoose from 'mongoose';
+
 
 const app = express();
-const swaggerUi = require('swagger-ui-express');
 
 //chargement des variables d'environnement
 dotenv.config();
