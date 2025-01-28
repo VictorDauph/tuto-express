@@ -1,21 +1,26 @@
-# Étape 1 : Utiliser une image officielle Node.js
+# Utiliser une image de base
 FROM node:16
 
-# Étape 2 : Définir le dossier de travail dans le conteneur
+# Définir le répertoire de travail
 WORKDIR /app
 
-# Étape 3 : Copier les fichiers package.json et package-lock.json
+# Copier les fichiers package.json et package-lock.json dans le conteneur
 COPY package*.json ./
 
-#Étape 4 : Installer les dépendances
+# Installer les dépendances
 RUN npm install
 
-# Étape 5 : Installer nodemon globalement (pour surveiller les modifications)
+# Installer nodemon dans l'environnement global
 RUN npm install -g nodemon
 
-# Étape 6 : Copier tout le code source dans le conteneur
+# Définir la variable d'environnement par défaut (peut être surchargée au runtime)
+ENV NODE_ENV=production
+
+RUN npm install -g nodemon
+
+# Copier le reste des fichiers dans le conteneur
 COPY . .
 
-CMD ["npm", "start"]
-
+# Utiliser un script shell pour conditionner le démarrage
+CMD ["sh", "-c", "if [ \"$NODE_ENV\" = \"development\" ]; then npm run dev; else npm start; fi"]
 
