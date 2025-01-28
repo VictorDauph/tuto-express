@@ -30,7 +30,7 @@ export async function createUser(req: Request, res: Response) {
         // Gestion des erreurs
         if (err.code === 11000) {
             // Erreur de duplication (email unique par exemple)
-            res.status(400).json({ message: 'Cet email est déjà utilisé' });
+            res.status(400).json({ message: 'Cet email ou ce nom est déjà utilisé' });
             return
         }
         res.status(500).json({ message: 'Erreur interne', error: err.message });
