@@ -19,3 +19,7 @@ npm run dockerStart
 Debug Docker
 
 le projet doit être lancé pour que le debugger fonctionne.
+
+Pour build & run le projet en local avec le .env file pour les variables d'environnement
+docker build -t exemple1 .   
+docker run --env-file .env -p 3000:3000 -v %cd%:/app -v /app/node_modules exemple1 
