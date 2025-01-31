@@ -2,8 +2,10 @@ import { Request, Response } from "express";
 import User, { IUser } from "../models/User";
 import { hashPassword } from "../utils/pwdUtils";
 
-export function getAllUsers(req: Request, res: Response) {
-    res.send([])
+export async function getAllUsers(req: Request, res: Response) {
+
+    const users = await User.find();
+    res.send(users)
 }
 
 export async function createUser(req: Request, res: Response) {
