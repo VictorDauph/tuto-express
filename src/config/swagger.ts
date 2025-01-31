@@ -10,7 +10,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: 'http://localhost:3000', // URL de votre API
+                url: `${process.env.API_URL}:${process.env.PORT}`, // URL de votre API
             },
         ],
     },
