@@ -7,6 +7,7 @@ import swaggerDocs from './config/swagger';
 import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 
 const app = express();
@@ -18,6 +19,8 @@ const PORT = process.env.PORT;
 console.log("test")
 
 app.use(express.json());
+// Active CORS pour toutes les origines
+app.use(cors());
 
 // Connecter MongoDB
 const connectDB = async () => {
