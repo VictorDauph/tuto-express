@@ -17,59 +17,6 @@ const router = express.Router();
  */
 router.get('/', getAllUsers);
 
-
-/**
- * @swagger
- * /users:
- *   post:
- *     summary: createUser
- *     description: Cette route créé un nouvel user
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 description: Le nom de l'utilisateur
- *                 example: "John Doe"
- *               email:
- *                 type: string
- *                 description: L'email de l'utilisateur
- *                 example: "John@gmail.com"
- *               age:
- *                 type: number
- *                 description: L'âge de l'utilisateur
- *                 example: 30
- *     responses:
- *       201:
- *         description: Utilisateur créé avec succès
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Message de succès
- *                   example: "Utilisateur créé avec succès"
- *                 data:
- *                   type: object
- *                   properties:
- *                     name:
- *                       type: string
- *                       example: "John Doe"
- *                     email:
- *                       type: string
- *                       example: "John@gmail.com"
- *                     age:
- *                       type: number
- *                       example: 30
- *       400:
- *         description: Requête invalide
- */
 router.post('/', createUser);
 
 /**
