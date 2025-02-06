@@ -22,7 +22,7 @@ const router = express.Router();
  *             properties:
  *               name:
  *                 type: string
- *                 example: "alice"
+ *                 example: "Alice"
  *                 description: Le nom d'utilisateur.
  *               password:
  *                 type: string
