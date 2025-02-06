@@ -8,15 +8,13 @@ WORKDIR /app
 COPY package*.json ./
 
 # Installer les dépendances
-RUN npm install
+RUN npm ci
 
 # Installer nodemon dans l'environnement global
 RUN npm install -g nodemon
 
 # Définir la variable d'environnement par défaut (peut être surchargée au runtime)
 ENV NODE_ENV=production
-
-RUN npm install -g nodemon
 
 # Copier le reste des fichiers dans le conteneur
 COPY . .
