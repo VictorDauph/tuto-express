@@ -19,8 +19,18 @@ const PORT = process.env.PORT;
 console.log("test")
 
 app.use(express.json());
-// Active CORS pour toutes les origines
-app.use(cors());
+
+// Activer CORS uniquement pour une seule origine
+//curl ifconfig.me pour connaître l'ip publique de votre pc
+const corsOptions = {
+    origin: process.env.CLIENT_URL || "", // Remplacez par le domaine autorisé
+    methods: 'GET,POST', // Restreindre les méthodes autorisées
+    allowedHeaders: 'Content-Type,Authorization', // Définir les en-têtes acceptés
+    credentials: true // Autoriser les cookies et les headers sécurisés
+};
+
+app.use(cors(corsOptions));
+
 
 // Connecter MongoDB
 const connectDB = async () => {

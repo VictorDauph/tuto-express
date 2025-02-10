@@ -37,6 +37,7 @@ export function verifyTokenMiddleware(req: Request, res: Response, next: NextFun
         const decoded = jwt.verify(token, SECRET_KEY) as JwtPayload;
 
         // Ajouter les données décodées à la requête pour un accès ultérieur
+        console.log(decoded)
         req.headers.user = JSON.stringify(decoded);
 
         // Passer au middleware suivant
