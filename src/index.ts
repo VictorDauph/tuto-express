@@ -20,9 +20,6 @@ console.log("test")
 
 app.use(express.json());
 
-
-const clientURL = process.env.CLIENT_URL
-
 // Activer CORS uniquement pour une seule origine
 //curl ifconfig.me pour connaître l'ip publique de votre pc
 const corsOptions = {
