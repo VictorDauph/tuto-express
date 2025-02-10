@@ -26,7 +26,7 @@ const corsOptions = {
     origin: process.env.CLIENT_URL || "http://localhost:4200", // Placer le domaine du client pour l'autoriser
     methods: 'GET,POST,DELETE,PUT', // Restreindre les méthodes autorisées
     allowedHeaders: 'Content-Type,Authorization', // Définir les en-têtes acceptés
-    credentials: true // Autoriser les cookies et les headers sécurisés
+    credentials: true // Autoriser les cookies et les headers sécurisés (dont celui qui contient le jwt)
 };
 
 app.use(cors(corsOptions));
