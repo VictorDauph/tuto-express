@@ -20,16 +20,20 @@ console.log("test")
 
 app.use(express.json());
 
+
+const clientURL = process.env.CLIENT_URL
+
 // Activer CORS uniquement pour une seule origine
 //curl ifconfig.me pour connaître l'ip publique de votre pc
 const corsOptions = {
-    origin: process.env.CLIENT_URL || "", // Remplacez par le domaine autorisé
-    methods: 'GET,POST', // Restreindre les méthodes autorisées
+    origin: process.env.CLIENT_URL || "http://localhost:4200", // Placer le domaine du client pour l'autoriser
+    methods: 'GET,POST,DELETE,PUT', // Restreindre les méthodes autorisées
     allowedHeaders: 'Content-Type,Authorization', // Définir les en-têtes acceptés
     credentials: true // Autoriser les cookies et les headers sécurisés
 };
 
 app.use(cors(corsOptions));
+
 
 
 // Connecter MongoDB
