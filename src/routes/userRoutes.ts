@@ -1,6 +1,6 @@
 import express from 'express';
 import { test, test2 } from '../controllers/testController';
-import { createUser, deleteUser, getAllUsers, modifyUser } from '../controllers/userController';
+import { deleteUser, getAllUsers, modifyUser } from '../controllers/userController';
 
 
 const router = express.Router();
@@ -16,8 +16,6 @@ const router = express.Router();
  *         description: Succès
  */
 router.get('/', getAllUsers);
-
-router.post('/', createUser);
 
 /**
  * @swagger

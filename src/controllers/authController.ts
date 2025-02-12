@@ -2,12 +2,17 @@ import { Request, Response } from 'express';
 import { hashPassword, verifyPassword } from '../utils/pwdUtils';
 import { generateToken } from '../utils/JWTUtils';
 import User, { IUser } from '../models/User';
+import { loginSchema, registerSchema } from '../JoiValidators/authValidators';
+import { validateSchema } from '../utils/joiUtil';
 
 
 export async function login(req: Request, res: Response): Promise<void> {
-    const { name, password } = req.body;
 
+    console.log(req.body);
     try {
+
+        const { name, password } = validateSchema(req, loginSchema);
+
         // Rechercher l'utilisateur dans la base de données par son nom
         const user = await User.findOne({ name });
 
@@ -32,21 +37,15 @@ export async function login(req: Request, res: Response): Promise<void> {
         // lui a envoyé
         res.cookie('jwt', token, { httpOnly: true, sameSite: 'strict' });
         res.status(200).json({ message: 'Login successful!' });
-    } catch (err) {
+    } catch (err: any) {
         console.error('Error during login:', err);
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: err.message });
     }
 }
 
 export async function register(req: Request, res: Response) {
     try {
-        const { name, email, age, password } = req.body;
-
-        // Validation des champs
-        if (!name || !email || !age || !password) {
-            res.status(400).json({ message: 'Tous les champs sont requis : name, email, age, password' });
-            return
-        }
+        const { name, email, age, password } = validateSchema(req, registerSchema)
 
         //hashage du password
         const hashedPassword = await hashPassword(password);

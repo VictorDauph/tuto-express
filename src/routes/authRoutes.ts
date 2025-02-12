@@ -26,7 +26,7 @@ const router = express.Router();
  *                 description: Le nom d'utilisateur.
  *               password:
  *                 type: string
- *                 example: "pwd"
+ *                 example: "pwdpwdpwd0@@@@@@@@@@@@@"
  *                 description: Le mot de passe de l'utilisateur.
  *     responses:
  *       200:
@@ -110,7 +110,7 @@ router.post('/login', login);
  *               password:
  *                 type: string
  *                 format: password
- *                 example: "pwd"
+ *                 example: "pwdpwdpwd0@@@@@@@@@@@@@"
  *     responses:
  *       201:
  *         description: Utilisateur créé avec succès.

@@ -8,37 +8,6 @@ export async function getAllUsers(req: Request, res: Response) {
     res.send(users)
 }
 
-export async function createUser(req: Request, res: Response) {
-    try {
-        const { name, email, age, password } = req.body;
-
-        // Validation des champs
-        if (!name || !email || !age || !password) {
-            res.status(400).json({ message: 'Tous les champs sont requis : name, email, age, password' });
-        }
-
-        //hashage du password
-        const hashedPassword = await hashPassword(password);
-
-        // Création du nouvel utilisateur
-        const newUser: IUser = new User({ name, email, age, hashedPassword });
-
-        // Sauvegarde dans la base de données
-        const savedUser = await newUser.save();
-
-        // Réponse réussie
-        res.status(201).json({ message: 'Utilisateur créé avec succès', data: savedUser });
-    } catch (err: any) {
-        // Gestion des erreurs
-        if (err.code === 11000) {
-            // Erreur de duplication (email unique par exemple)
-            res.status(400).json({ message: 'Cet email ou ce nom est déjà utilisé' });
-            return
-        }
-        res.status(500).json({ message: 'Erreur interne', error: err.message });
-
-    }
-}
 
 export async function modifyUser(req: Request, res: Response) {
     try {

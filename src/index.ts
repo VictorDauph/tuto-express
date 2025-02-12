@@ -8,6 +8,9 @@ import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import mongoSanitize from 'express-mongo-sanitize';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 
 
 const app = express();
@@ -19,6 +22,8 @@ const PORT = process.env.PORT;
 console.log("test")
 
 app.use(express.json());
+
+
 
 // Activer CORS uniquement pour une seule origine
 //curl ifconfig.me pour connaître l'ip publique de votre pc
@@ -46,6 +51,22 @@ const connectDB = async () => {
 
 connectDB();
 
+// Appliquer express-mongo-sanitize sur les requêtes entrantes
+app.use(mongoSanitize());
+
+// Activer helmet pour sécuriser les en-têtes HTTP
+app.use(helmet());
+
+// Middleware de rate limiting
+export const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // ⏳ temps en millisecondes
+    max: 100, // 🔒 Limite à 100 requêtes par IP
+    message: "⛔ Trop de requêtes. Réessayez plus tard."
+});
+
+// Appliquer le rate limiter sur toutes les routes
+app.use(apiLimiter);
+
 //Routes
 app.use('/test', testRoutes)
 app.use('/users', userRoutes)
@@ -55,6 +76,13 @@ app.use('/auth', authRoutes);
 
 // Swagger route
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// 📌 Route pour exporter le `swagger.json`
+app.get('/swagger.json', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerDocs);
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${process.env.API_URL}:${PORT}`);
