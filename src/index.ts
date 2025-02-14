@@ -54,13 +54,29 @@ connectDB();
 // Appliquer express-mongo-sanitize sur les requêtes entrantes
 app.use(mongoSanitize());
 
-// Activer helmet pour sécuriser les en-têtes HTTP
-app.use(helmet());
+app.use(
+    helmet({
+        contentSecurityPolicy: {
+            directives: {
+                defaultSrc: ["'self'"],
+                scriptSrc: ["'self'", "'nonce-random123'"],
+                styleSrc: ["'self'"], // Supprimer 'strict-dynamic'
+                imgSrc: ["'self'"], // Supprimer 'data:'
+                objectSrc: ["'none'"],
+                baseUri: ["'self'"],
+                formAction: ["'self'"],
+                frameAncestors: ["'none'"],
+                scriptSrcAttr: ["'none'"],
+                upgradeInsecureRequests: [],
+            },
+        },
+    })
+);
 
 // Middleware de rate limiting
 export const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // ⏳ temps en millisecondes
-    max: 100, // 🔒 Limite à 100 requêtes par IP
+    max: 100000, // 🔒 Limite à 100 requêtes par IP
     message: "⛔ Trop de requêtes. Réessayez plus tard."
 });
 
@@ -78,7 +94,7 @@ app.use('/auth', authRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // 📌 Route pour exporter le `swagger.json`
-app.get('/swagger.json', (req, res) => {
+app.get('/api-docs.json', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(swaggerDocs);
 });

@@ -4,7 +4,8 @@ import { hashPassword } from "../utils/pwdUtils";
 
 export async function getAllUsers(req: Request, res: Response) {
 
-    const users = await User.find();
+    let users = await User.find();
+    users.forEach(user => user.hashedPassword = "");
     res.send(users)
 }
 
