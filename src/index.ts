@@ -73,6 +73,11 @@ app.use(
     })
 );
 
+
+// ✅ Solution : Activer trust proxy
+app.set('trust proxy', 1); // 1 = faire confiance au premier proxy (Render, Heroku, etc.)
+
+
 // Middleware de rate limiting
 export const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // ⏳ temps en millisecondes
